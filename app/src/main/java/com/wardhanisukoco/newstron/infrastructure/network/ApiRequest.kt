@@ -12,9 +12,16 @@ import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 
 object ApiRequest {
-    inline fun <T> safeApiCall(apiCall: () -> Response<T>): ApiResponse<T> {
+     inline fun <T> safeApiCall(apiCall: () -> Response<T>): ApiResponse<T> {
         return try {
-            ApiResponse.success(apiCall.invoke())
+            val response = apiCall.invoke()
+
+            if (response.code() == 200) {
+                ApiResponse.success(response)
+            } else {
+//                ApiResponse.error(Exception(response.toString()))
+                throw Exception(response.toString())
+            }
         } catch (e: Exception) {
             ApiResponse.failure(e)
         }

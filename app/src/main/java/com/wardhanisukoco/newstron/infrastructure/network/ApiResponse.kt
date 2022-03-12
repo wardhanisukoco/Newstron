@@ -24,18 +24,29 @@ data class ApiResponse<T>(
                 exception = exception
             )
         }
+        fun <T> error(exception: Exception): ApiResponse<T> {
+            return ApiResponse(
+                status = Status.Error,
+                data = null,
+                exception = exception
+            )
+        }
     }
 
     sealed class Status {
         object Success : Status()
         object Failure : Status()
+        object Error : Status()
     }
 
     val failed: Boolean
         get() = this.status == Status.Failure
 
+    val error: Boolean
+        get() = this.status == Status.Failure
+
     val isSuccessful: Boolean
-        get() = !failed && this.data?.isSuccessful == true
+        get() = !failed && !error && this.data?.isSuccessful == true
 
     val body: T
         get() = this.data!!.body()!!
