@@ -13,6 +13,8 @@ interface NewsApiService {
         @Query("sources") sources: String? = null,
         @Query("category") category: String? = null,
         @Query("language") language: String? = null,
-        @Query("country") country: String? = null
+        @Query("country") country: String? = null,
+        @Query("pageSize") pageSize: Int? = null,
+        @Query("page") page: Int? = null
     ): Response<ArticlesResponse>
 }
