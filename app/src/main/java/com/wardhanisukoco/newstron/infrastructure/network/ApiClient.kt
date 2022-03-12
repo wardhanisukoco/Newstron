@@ -34,12 +34,10 @@ class ApiClient(private val clientListener: ApiClientListener) {
     private class HttpInterceptor(private val listener: ApiClientListener) : Interceptor {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
-//            val authUtil: AuthUtil = listener.getAuthUtil()
-//            var tryCount = 0
             val originalRequest = chain.request()
 
             val headers = Headers.Builder()
-                .add("Authorization", BuildConfig.NEWS_API_KEY)
+                .add("x-api-key", BuildConfig.NEWS_API_KEY)
                 .build()
 
             val newRequest = originalRequest.newBuilder()
@@ -56,14 +54,6 @@ class ApiClient(private val clientListener: ApiClientListener) {
                     e.printStackTrace()
                 }
             }
-
-//            if (newRequest.method != "GET") return response
-//
-//            while (!response.isSuccessful && tryCount < 3) {
-//                tryCount++
-//                response.close()
-//                response = chain.proceed(newRequest)
-//            }
 
             return response
         }
