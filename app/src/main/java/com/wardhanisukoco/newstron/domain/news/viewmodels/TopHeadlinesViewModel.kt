@@ -12,12 +12,11 @@ import kotlinx.coroutines.launch
 class TopHeadlinesViewModel: ViewModel() {
     private val repository = NewsRepository(object: ApiClientListener {
         override fun handleUnauthorized() {
-            TODO("Not yet implemented")
         }
     })
 
     fun getArticles(): Flow<PagingData<Article>> {
         return repository.getArticles("technology")
-            .cachedIn(viewModelScope)
+//            .cachedIn(viewModelScope)
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wardhanisukoco.newstron.application.adapter.LoadingStateAdapter
 import com.wardhanisukoco.newstron.databinding.FragmentTopHeadlinesBinding
@@ -46,15 +47,14 @@ class TopHeadlinesFragment : Fragment(), TopHeadlinesListAdapter.OnItemClickList
 
     private fun setupView() {
         _adapter = TopHeadlinesListAdapter(activity!!.applicationContext, this)
-        _adapter?.withLoadStateHeaderAndFooter(
+        val concatAdapter = _adapter?.withLoadStateHeaderAndFooter(
             header = LoadingStateAdapter(_adapter!!),
             footer = LoadingStateAdapter(_adapter!!)
         )
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(activity!!.applicationContext)
             setHasFixedSize(true)
-
-            adapter = _adapter
+            adapter = concatAdapter
         }
     }
 
