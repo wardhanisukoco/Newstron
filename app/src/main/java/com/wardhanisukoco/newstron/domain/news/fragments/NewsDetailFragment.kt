@@ -39,10 +39,11 @@ class NewsDetailFragment(private val article: Article) : DialogFragment(){
         binding.toolbar.setNavigationOnClickListener { dismiss() }
         Picasso.with(context)
             .load(article.urlToImage)
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.bg_gradient)
             .into(binding.image)
         binding.title.text = article.title
-        binding.content.text = article.description
+        binding.desc.text = article.description
+        binding.content.text = article.content
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

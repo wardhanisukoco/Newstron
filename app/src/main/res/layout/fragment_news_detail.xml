@@ -55,6 +55,15 @@
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/desc"
+            android:layout_marginTop="4dp"
+            android:inputType="textMultiLine"
+            android:layout_gravity="fill_vertical"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/content"
             android:layout_marginTop="4dp"
             android:inputType="textMultiLine"
