@@ -3,6 +3,7 @@ package com.wardhanisukoco.newstron.domain.news.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.DiffUtil
 import com.squareup.picasso.Picasso
@@ -35,7 +36,7 @@ class TopHeadlinesListAdapter(private val context: Context, val listener: OnItem
         binding.desc.text = item.description
         Picasso.with(context)
             .load(item.urlToImage)
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.bg_gradient)
             .fit()
             .into(binding.image)
     }
@@ -46,6 +47,11 @@ class TopHeadlinesListAdapter(private val context: Context, val listener: OnItem
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT
         )
         if (position == 0) {
+            val containerParams = FrameLayout.LayoutParams(
+                LinearLayoutCompat.LayoutParams.MATCH_PARENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT
+            )
+            holder.binder.container.layoutParams = containerParams
             params.weight = .618f
             holder.binder.container.orientation = LinearLayoutCompat.VERTICAL
         } else {
