@@ -21,7 +21,6 @@ class LoadingStateAdapter(
         ) { listener.retry() }
 
     private fun bind(binding: LayoutLoadingStateBinding, loadState: LoadState) {
-        Log.d("JKL", loadState.toString())
         with(binding) {
             progressBar.isVisible = loadState is LoadState.Loading
             retryButton.isVisible = loadState is LoadState.Error
