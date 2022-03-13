@@ -12,19 +12,18 @@ import com.wardhanisukoco.newstron.application.adapter.LoadingStateAdapter
 import com.wardhanisukoco.newstron.application.adapter.viewholder.BaseViewHolder
 import com.wardhanisukoco.newstron.databinding.ItemHeadlinesBinding
 import com.wardhanisukoco.newstron.domain.news.models.Article
-import android.widget.LinearLayout
+import androidx.viewbinding.ViewBinding
 
 
-
-
-class TopHeadlinesListAdapter(private val context: Context) : BasePagingAdapter<Article, ItemHeadlinesBinding>(DiffCallBack()),
+class TopHeadlinesListAdapter(private val context: Context, val listener: OnItemClickListener)
+    : BasePagingAdapter<Article, ItemHeadlinesBinding>(DiffCallBack()),
     LoadingStateAdapter.RetryListener {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BaseViewHolder<ItemHeadlinesBinding> {
-        return BaseViewHolder(
+        return ViewHolder(
             ItemHeadlinesBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
@@ -56,6 +55,16 @@ class TopHeadlinesListAdapter(private val context: Context) : BasePagingAdapter<
         holder.binder.imageContainer.layoutParams = params
 
         super.onBindViewHolder(holder, position)
+    }
+    inner class ViewHolder<T: ViewBinding>(binder: T): BaseViewHolder<T>(binder) {
+        init {
+            binder.root.setOnClickListener {
+                listener.onItemClick(getItem(absoluteAdapterPosition))
+            }
+        }
+    }
+    interface OnItemClickListener {
+        fun onItemClick(item: Article?)
     }
     internal class DiffCallBack : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {

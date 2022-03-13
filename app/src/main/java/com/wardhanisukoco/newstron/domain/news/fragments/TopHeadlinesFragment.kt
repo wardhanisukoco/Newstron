@@ -10,16 +10,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wardhanisukoco.newstron.application.adapter.LoadingStateAdapter
 import com.wardhanisukoco.newstron.databinding.FragmentTopHeadlinesBinding
-import com.wardhanisukoco.newstron.databinding.ItemHeadlinesBinding
 import com.wardhanisukoco.newstron.domain.news.adapters.TopHeadlinesListAdapter
 import com.wardhanisukoco.newstron.domain.news.models.Article
 import com.wardhanisukoco.newstron.domain.news.viewmodels.TopHeadlinesViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class TopHeadlinesFragment : Fragment() {
+class TopHeadlinesFragment : Fragment(), TopHeadlinesListAdapter.OnItemClickListener {
 
-    //    private var list = mutableListOf<Article>()
     private var _adapter: TopHeadlinesListAdapter? = null
     private var _binding: FragmentTopHeadlinesBinding? = null
     private val binding: FragmentTopHeadlinesBinding
@@ -42,16 +40,21 @@ class TopHeadlinesFragment : Fragment() {
         viewModel.getArticles()
     }
 
+    override fun onItemClick(item: Article?) {
+        item?.let { NewsDetailFragment(it).show(activity!!.supportFragmentManager, "") }
+    }
+
     private fun setupView() {
+        _adapter = TopHeadlinesListAdapter(activity!!.applicationContext, this)
+        _adapter?.withLoadStateHeaderAndFooter(
+            header = LoadingStateAdapter(_adapter!!),
+            footer = LoadingStateAdapter(_adapter!!)
+        )
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(activity!!.applicationContext)
             setHasFixedSize(true)
-            _adapter = TopHeadlinesListAdapter(activity!!.applicationContext)
+
             adapter = _adapter
-            _adapter?.withLoadStateHeaderAndFooter(
-                header = LoadingStateAdapter(_adapter!!),
-                footer = LoadingStateAdapter(_adapter!!)
-            )
         }
     }
 
@@ -73,5 +76,6 @@ class TopHeadlinesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _adapter = null
     }
 }
