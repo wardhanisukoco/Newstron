@@ -22,7 +22,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "NEWS_API_URL", "\"https://newsapi.org/v2/\""
-            buildConfigField "String", "NEWS_API_KEY", "\"b456ee6977ea4acbb3e60dd3df0392e8\""
+            buildConfigField "String", "NEWS_API_KEY", "\"ee3a7c155d2a441eb396719c448f78bb\""
         }
         release {
             buildConfigField "String", "NEWS_API_URL", "\"https://newsapi.org/v2/\""
@@ -72,7 +72,7 @@ dependencies {
     // PICASSO
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    testImplementation 'junit:junit:5.0.0'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
