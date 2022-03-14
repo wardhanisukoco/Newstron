@@ -1,9 +1,13 @@
 package com.wardhanisukoco.newstron.domain.news.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +24,9 @@ import kotlinx.coroutines.launch
 class TopHeadlinesFragment : Fragment(), TopHeadlinesListAdapter.OnItemClickListener {
 
     private var _adapter: TopHeadlinesListAdapter? = null
+    private val adapter: TopHeadlinesListAdapter
+        get() = _adapter!!
+
     private var _binding: FragmentTopHeadlinesBinding? = null
     private val binding: FragmentTopHeadlinesBinding
         get() = _binding!!
@@ -47,7 +54,20 @@ class TopHeadlinesFragment : Fragment(), TopHeadlinesListAdapter.OnItemClickList
 
     private fun setupView() {
         _adapter = TopHeadlinesListAdapter(activity!!.applicationContext, this)
-        val concatAdapter = _adapter?.withLoadStateHeaderAndFooter(
+        adapter.addLoadStateListener { loadState ->
+            val isEmpty =
+                loadState.source.refresh is LoadState.Error
+                    && adapter.itemCount < 1
+            if (isEmpty) {
+                binding.recyclerView.isGone = true
+                binding.emptyList.isGone = false
+                binding.emptyMsg.text = (loadState.source.refresh as? LoadState.Error)?.error?.message
+            } else {
+                binding.recyclerView.isGone = false
+                binding.emptyList.isGone = true
+            }
+        }
+        val concatAdapter = adapter.withLoadStateHeaderAndFooter(
             header = LoadingStateAdapter(_adapter!!),
             footer = LoadingStateAdapter(_adapter!!)
         )
@@ -56,12 +76,17 @@ class TopHeadlinesFragment : Fragment(), TopHeadlinesListAdapter.OnItemClickList
             setHasFixedSize(true)
             adapter = concatAdapter
         }
+        binding.refreshButton.setOnClickListener {
+            lifecycleScope.launch {
+                adapter.refresh()
+            }
+        }
     }
 
     private fun collectUiState() {
         lifecycleScope.launch {
             viewModel.getArticles().collectLatest { articles ->
-                _adapter?.submitData(articles)
+                adapter.submitData(articles)
             }
         }
     }
