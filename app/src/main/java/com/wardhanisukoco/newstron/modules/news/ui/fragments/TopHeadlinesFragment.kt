@@ -46,11 +46,11 @@ class TopHeadlinesFragment : Fragment(), TopHeadlinesListAdapter.OnItemClickList
     }
 
     override fun onItemClick(item: Article?) {
-        item?.let { NewsDetailFragment(it).show(activity!!.supportFragmentManager, "") }
+        item?.let { NewsDetailFragment(it).show(requireActivity().supportFragmentManager, "") }
     }
 
     private fun setupView() {
-        _adapter = TopHeadlinesListAdapter(activity!!.applicationContext, this)
+        _adapter = TopHeadlinesListAdapter(requireContext(), this)
         adapter.addLoadStateListener { loadState ->
             val isEmpty =
                 loadState.source.refresh is LoadState.Error
@@ -69,7 +69,7 @@ class TopHeadlinesFragment : Fragment(), TopHeadlinesListAdapter.OnItemClickList
             footer = LoadingStateAdapter(_adapter!!)
         )
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(activity!!.applicationContext)
+            layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = concatAdapter
         }

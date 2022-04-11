@@ -29,7 +29,7 @@ class NewsDetailFragment(private val article: Article) : DialogFragment(){
         super.onCreateView(inflater, container, savedInstanceState)
 
         _binding = FragmentNewsDetailBinding.inflate(
-            LayoutInflater.from(context),
+            layoutInflater,
             null,
             false
         )

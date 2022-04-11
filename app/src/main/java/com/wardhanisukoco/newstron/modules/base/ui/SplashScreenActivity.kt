@@ -7,12 +7,12 @@ import android.os.Handler
 import android.os.Looper
 
 import androidx.appcompat.app.AppCompatActivity
-import com.wardhanisukoco.newstron.modules.news.ui.activities.MainActivity;
+import com.wardhanisukoco.newstron.modules.news.ui.activities.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState)
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity( Intent(this, MainActivity::class.java))
             finish()
