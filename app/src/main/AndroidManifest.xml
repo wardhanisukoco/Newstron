@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Newstron">
         <activity
             android:theme="@style/Theme.Newstron.Splash"
-            android:name=".application.SplashScreenActivity"
+            android:name=".modules.base.ui.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".modules.news.ui.activities.MainActivity"
             android:exported="true"/>
     </application>
 

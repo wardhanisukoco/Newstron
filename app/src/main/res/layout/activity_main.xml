@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".modules.news.ui.activities.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:name="com.wardhanisukoco.newstron.domain.news.fragments.TopHeadlinesFragment"
+        android:name="com.wardhanisukoco.newstron.modules.news.ui.fragments.TopHeadlinesFragment"
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
