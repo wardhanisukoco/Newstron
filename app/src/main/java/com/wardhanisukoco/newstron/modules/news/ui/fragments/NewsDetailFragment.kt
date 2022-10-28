@@ -37,7 +37,7 @@ class NewsDetailFragment(private val article: Article) : DialogFragment(){
     }
     private fun setupView() {
         binding.toolbar.setNavigationOnClickListener { dismiss() }
-        Picasso.with(context)
+        Picasso.get()
             .load(article.urlToImage)
             .placeholder(R.drawable.bg_gradient)
             .into(binding.image)

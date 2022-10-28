@@ -34,7 +34,7 @@ class TopHeadlinesListAdapter(private val context: Context, val listener: OnItem
     override fun bind(binding: ItemHeadlinesBinding, item: Article) {
         binding.title.text = item.title
         binding.desc.text = item.description
-        Picasso.with(context)
+        Picasso.get()
             .load(item.urlToImage)
             .placeholder(R.drawable.bg_gradient)
             .fit()
